@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>З Новим Роком, Майстер Світла!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap');
+        
+        body {
+            background-color: #0f172a;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            overflow: hidden;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #60a5fa;
+            border-radius: 50%;
+            filter: blur(1px);
+            animation: move-sparkle 2s linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes move-sparkle {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-100vh) scale(0); opacity: 0; }
+        }
+
+        .scene {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            animation: fade-in 1s ease-out forwards;
+        }
+
+        .active-scene {
+            display: block;
+        }
+
+        @keyframes fade-in {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .glow-text {
+            text-shadow: 0 0 20px #3b82f6, 0 0 40px #1d4ed8;
+        }
+
+        .electric-border {
+            border: 4px solid #3b82f6;
+            box-shadow: 0 0 15px #3b82f6, inset 0 0 15px #3b82f6;
+            animation: flicker 0.1s infinite alternate;
+        }
+
+        @keyframes flicker {
+            0% { opacity: 0.9; }
+            100% { opacity: 1; }
+        }
+
+        .btn-start {
+            background: linear-gradient(45deg, #2563eb, #7c3aed);
+            padding: 1rem 2rem;
+            border-radius: 9999px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn-start:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Start Overlay -->
+    <div id="start-overlay" class="flex flex-col items-center gap-6">
+        <div class="text-6xl mb-4">⚡️🎄</div>
+        <h1 class="text-3xl text-center">Привітання з високою напругою!</h1>
+        <button onclick="startPresentation()" class="btn-start">УВІМКНУТИ ЖИВЛЕННЯ</button>
+    </div>
+
+    <!-- Scenes -->
+    <div id="scenes-container" class="hidden w-full max-w-2xl">
+        
+        <!-- Scene 1 -->
+        <div class="scene active-scene" id="scene-1">
+            <div class="text-4xl mb-8">👷‍♂️👷‍♀️</div>
+            <h2 class="text-5xl font-black glow-text italic">КОЛИ ТВОЄ ЖИТТЯ — СУЦІЛЬНА ФАЗА...</h2>
+        </div>
+
+        <!-- Scene 2 -->
+        <div class="scene" id="scene-2">
+            <h2 class="text-3xl mb-6">БАЖАЮ В НОВОМУ РОЦІ:</h2>
+            <div class="space-y-4 text-2xl font-bold">
+                <div class="p-4 electric-border rounded-lg">🔥 ЩОБ КОНТАКТИ НЕ ГРІЛИСЯ</div>
+                <div class="p-4 electric-border rounded-lg">🔌 ЩОБ "НУЛЬ" НЕ ВІДГОРАВ</div>
+                <div class="p-4 electric-border rounded-lg">🛡️ ОПІР ТІЛЬКИ У ВОРОГІВ!</div>
+            </div>
+        </div>
+
+        <!-- Scene 3 -->
+        <div class="scene" id="scene-3">
+            <div class="text-6xl mb-6 animate-bounce">🍾⚡️</div>
+            <p class="text-3xl leading-relaxed">
+                «БАЖАЮ СТАБІЛЬНОЇ НАПРУГИ ТА <span class="text-yellow-400 underline italic">ІСКРИ</span> В ОЧАХ!»
+            </p>
+            <p class="mt-6 text-xl text-blue-300">Але не переплутай фазу з удачею!</p>
+        </div>
+
+        <!-- Scene 4 -->
+        <div class="scene" id="scene-4">
+            <h2 class="text-6xl font-black text-yellow-400 glow-text mb-8">З НОВИМ 2026 РОКОМ!</h2>
+            <p class="text-2xl mb-8">Світлого та безпечного свята!</p>
+            <div class="text-gray-400 italic">P.S. Нехай автомати вибивають тільки від щастя! 🥂</div>
+            <button onclick="location.reload()" class="mt-12 text-sm underline opacity-50">Повторити цикл</button>
+        </div>
+
+    </div>
+
+    <!-- Audio Placeholder (Standard Web Audio) -->
+    <script>
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.classList.add('sparkle');
+            sparkle.style.left = Math.random() * 100 + 'vw';
+            sparkle.style.animationDuration = (Math.random() * 2 + 1) + 's';
+            document.body.appendChild(sparkle);
+            setTimeout(() => sparkle.remove(), 2000);
+        }
+
+        let sceneIndex = 1;
+        const totalScenes = 4;
+
+        function nextScene() {
+            const current = document.getElementById(`scene-${sceneIndex}`);
+            current.classList.remove('active-scene');
+            
+            sceneIndex++;
+            if (sceneIndex <= totalScenes) {
+                const next = document.getElementById(`scene-${sceneIndex}`);
+                next.classList.add('active-scene');
+                
+                // Special effects for scene 2 and 4
+                if(sceneIndex === 2) setInterval(createSparkle, 100);
+            }
+        }
+
+        function startPresentation() {
+            document.getElementById('start-overlay').style.display = 'none';
+            document.getElementById('scenes-container').classList.remove('hidden');
+            
+            // Background hum sound (simulated with JS if no file)
+            playElectricHum();
+
+            // Scene Timing
+            setTimeout(nextScene, 3000); // 1 to 2
+            setTimeout(nextScene, 8000); // 2 to 3
+            setTimeout(nextScene, 14000); // 3 to 4
+        }
+
+        function playElectricHum() {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(50, ctx.currentTime); // 50Hz hum!
+            gain.gain.setValueAtTime(0.05, ctx.currentTime);
+            
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start();
+            
+            // Stop hum when finished
+            setTimeout(() => osc.stop(), 20000);
+        }
+
+        // Constant background sparkles
+        setInterval(createSparkle, 300);
+    </script>
+</body>
+</html>
